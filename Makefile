@@ -7,8 +7,8 @@ TEST_TARGET = unit_tests
 all: build
 
 build:
-	@echo "🏗️ building project"
-	$(CXX) $(CXXFLAGS) main.cpp Linked_list.cpp -o $(TARGET)
+	@echo "building project"
+	$(CXX) $(CXXFLAGS) main.cpp linked_list.cpp -o $(TARGET)
 	@echo "✅ build complete"
 
 test:
