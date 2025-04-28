@@ -1,1 +1,90 @@
-build
+name: Linked List CI/CD
+run-name: ${{ github.actor }} is testing Linked List Project 🚀
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - run: echo "🎉 Triggered by ${{ github.event_name }} event."
+      - run: echo "🐧 Running on ${{ runner.os }} server."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - run: echo "💡 Repository cloned successfully."
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ make clang-tidy
+
+      - name: Build project
+        run: make build
+
+      - run: echo "build completed."
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: build
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ make
+
+      - name: Build and Run Tests
+        run: make test
+
+      - run: echo "Test completed."
+
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: test
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install Debian build tools
+        run: |
+          sudo apt update
+          sudo apt install -y dpkg-dev debhelper lintian
+
+      - name: Build Debian package
+        run: make build-deb
+
+      - name: Verify Debian package exists
+        run: ls -lah
+
+      - name: Upload Debian package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linked-list-debian-package
+          path: linked-list-v1.0.0.deb
+          retention-days: 30
+
+  lint-deb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: package
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install Debian linting tools
+        run: |
+          sudo apt update
+          sudo apt install -y lintian
+
+      - name: Verify Debian package exists before linting
+        run: ls -lah linked-list-v1.0.0.deb || echo "Warning Debian package not found!"
+
+      - name: Lint Debian package
+        run: make lint-deb
+
+      - run: echo "✅ Debian package linting completed"

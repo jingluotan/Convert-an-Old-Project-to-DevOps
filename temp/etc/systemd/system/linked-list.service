@@ -1,0 +1,11 @@
+[Unit]
+Description=Linked List Application Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/linked_list_app
+Restart=always
+User=nobody
+
+[Install]
+WantedBy=multi-user.target

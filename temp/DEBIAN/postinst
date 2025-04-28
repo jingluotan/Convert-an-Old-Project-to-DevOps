@@ -1,0 +1,5 @@
+#!/bin/sh
+systemctl daemon-reload
+systemctl enable linked-list.service
+systemctl start linked-list.service
+exit 0

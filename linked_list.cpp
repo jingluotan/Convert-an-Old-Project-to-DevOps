@@ -1,7 +1,6 @@
 /* 
-Group Name: Jake K, Liya T, Keyu C, Daisy B
-Class: CPSC223, Section 1
-Date Submitted: September 8, 2024
+Name: Keyu Chen
+Class: CPSC334-Linux and DevOps
 Assignment: Managing and collecting tree shade data per block on the Logan neighborhood
 Description: doubly linked list implementation of the tree data
 */

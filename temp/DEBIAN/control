@@ -1,0 +1,5 @@
+Package: linked-list
+Version: 1.0.0
+Architecture: amd64
+Maintainer: Keyu Chen <kchen2@zagmail.gonzaga.edu>
+Description: A simple linked list C++ application packaged as a Debian service
